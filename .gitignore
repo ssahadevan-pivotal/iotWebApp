@@ -1,0 +1,10 @@
+
+*.lock
+
+*.lock
+
+*.class
+
+build/libs/iotWebApp.jar.original
+
+build/resources/main/templates/index_old.html

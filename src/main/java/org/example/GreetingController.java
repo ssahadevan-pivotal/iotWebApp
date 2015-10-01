@@ -119,8 +119,11 @@ private boolean DEBUG=true;
         return "underConstruction";
     }
 
+    /* On Authorize, it comes to redirect            */
+    /*                                               */
+    /* Use OAuth token and get vehicle and User Data */
     @RequestMapping("/redirect")
-    public String submitTicker(@RequestParam(value="code", required=false) String code
+    public String redirect(@RequestParam(value="code", required=false) String code
                                , @RequestParam(value="state", required=false) String state
                                ,Model model) {
 	System.out.println("***  In redirect: code is" + code + ", state is " + state );
@@ -189,8 +192,15 @@ private boolean DEBUG=true;
         return "userData";
     }
     
-    @RequestMapping("/submitTicker")
-    public String submitTicker(@RequestParam(value="ticker", required=false, defaultValue="EMC") String ticker, Model model) {
+    /**
+    * Called when a user clicks View Car Data button on the screen  
+    * Sets up the OAuth request and calls the redirect URL          
+    * @author   Sharath Sahadevan  
+    * @version  1.0
+    * @Since    Oct 2015                   
+    */
+    @RequestMapping("/getCarData")
+    public String getCarData(@RequestParam(value="ticker", required=false, defaultValue="EMC") String ticker, Model model) {
         
        try 
        {        
@@ -223,14 +233,16 @@ private boolean DEBUG=true;
         }
        
         /* Note: Will not get heref it works  because of redirect above */
-        return "result" ;
+        return "error" ;
     }
     
-    @RequestMapping("/getMacroEconData")
-    public String macroData(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
-        return "macroData";
+    /* Caused Issues - So Commenting it out
+    @RequestMapping("/error")
+    public String error( Model model) {
+        // model.addAttribute("name", name);
+        return "error";
     }
+    */
 
 
     /* Get the Vehicle Information and add it to Model */
