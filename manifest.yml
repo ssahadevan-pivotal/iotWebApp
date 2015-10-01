@@ -1,0 +1,7 @@
+---
+applications:
+- name: iotWebApp
+  memory: 512M
+  instances: 1
+  path: build/libs/iotWebApp.jar
+  services: [ iotDb ]

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:cloud="http://www.springframework.org/schema/cloud"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/cloud http://www.springframework.org/schema/cloud/spring-cloud.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<beans profile="auto">
+		<cloud:data-source id="testDataSource" service-name="iotDb">
+			<cloud:pool pool-size="20" max-wait-time="200"/>
+		</cloud:data-source>
+	</beans>
+
+	<beans profile="cloud-properties">
+		<cloud:properties id="cloud-properties"/>
+		<context:property-placeholder properties-ref="cloud-properties"/>
+
+		<bean id="testDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+			<property name="url" value="${cloud.services.StockAnalyzerDb.connection.jdbcUrl}" />
+			<property name="username" value="${cloud.services.StockAnalyzerDb.connection.username}"/>
+			<property name="password" value="${cloud.services.StockAnalyzerDb.connection.password}"/>
+		</bean>
+	</beans>
+
+	<beans profile="boot-properties">
+		<bean id="testDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+			<property name="url" value="${vcap.services.StockAnalyzerDb.credentials.jdbcUrl}" />
+			<property name="username" value="${vcap.services.StockAnalyzerDb.credentials.username}"/>
+			<property name="password" value="${vcap.services.StockAnalyzerDb.credentials.password}"/>
+		</bean>
+	</beans>
+</beans>

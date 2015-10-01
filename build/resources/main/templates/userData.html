@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+   <link type="text/css" rel="stylesheet" href="css/main.css" />
+   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+ </head>
+   <body>
+    <!--  Header -->
+     
+<div>
+       <ul id="nav">
+        <li><a href="/index">Home</a></li>
+	<li><a href="/configure">Configure</a></li>
+	<li><a href="https://developer.automatic.com/documentation/">Developer Docs</a></li>
+        <li><a href="http://twitter.com/sharath_sahadev">Contact us</a></li> 
+        <li><a href="https://twitter.com/share" class="twitter-share-button" data-count="none">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script></li>
+	</ul>
+</div>
+<br></br>
+   
+<!--  {% include "nav.html" %} --> 
+<div align="center">           
+            
+         
+
+<p class="ex1"></p>
+<b> <p th:text="'Details for ' + ${firstName} + ' ' + ${lastName} +  '!' "   /> </b> 
+
+&nbsp;&nbsp;
+
+ <br></br>           
+
+ <div align="center">
+       <table id="box-table-a" summary="VehicleInfo">
+                <thead>
+                    <tr>
+                        <th scope="col">Make</th>
+                        <th scope="col">Model</th>
+                        <th scope="col">Year</th>
+                        <th scope="col">Display Name</th>     
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>  <p th:text="${make}"   /> </td>
+                        <td>  <p th:text="${model}" /> </td>
+                        <td>  <p th:text="${year}" /> </td>
+                        <td>  <p th:text="${displayName}" /> </td>
+ 		    </tr>
+                </tbody>
+        </table>            
+  </div>   
+
+ <br></br>           
+
+ <div align="center">
+       <table id="box-table-a" summary="Trip Info">
+                <thead>
+                    <tr>
+                        <th scope="col">Trip</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">From</th>
+                        <th scope="col">To</th>
+                        <th scope="col">End Date</th>     
+                        <th scope="col">startLon</th>     
+                        <th scope="col">startLat</th>     
+                        <th scope="col">EndLon</th>     
+                        <th scope="col">EndLat</th>     
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="trip, iterationStatus : ${tripList}">
+                        <td> <a th:href="@{'/map?startLon='+${trip.startLon}}"><p th:text="${iterationStatus.count}"   /></a> </td>
+                        <td>  <p th:text="${trip.startAddress}"   /> </td>
+                        <td>  <p th:text="${trip.startedAt}" /> </td>
+                        <td>  <p th:text="${trip.endAddress}" /> </td>
+                        <td>  <p th:text="${trip.endedAt}" /> </td>
+                        <td>  <p th:text="${trip.startLon}" /> </td>
+                        <td>  <p th:text="${trip.startLat}" /> </td>
+                        <td>  <p th:text="${trip.endLon}" /> </td>
+                        <td>  <p th:text="${trip.endLat}" /> </td>
+ 		    </tr>
+                </tbody>
+        </table>            
+  </div>   
+
+</div>
+
+ </body>
+ </html>

@@ -1,0 +1,36 @@
+
+Internet of Things ( IOT ) application to explore the connected car.
+
+Gets information from Auomatic
+
+Todos:
+
+1. Get Vehicle Info
+
+
+
+This was original basis for this application:
+
+== Building
+
+Build the app with the following command:
+
+[source,bash]
+----
+$ ./gradlew assemble
+----
+
+or use ./compile.sh
+
+== Running on Cloud Foundry
+
+Before pushing the app, create a MySQL database service as either a managed service instance or user-provided service instance. The name of the service instance must be `iotDb` to match the property names in the XML configuration. If creating a user-provided service instance, the credentials should be formed as followed:
+
+Then push the app to CF:
+
+[source,bash]
+----
+$ cf push
+----
+
+

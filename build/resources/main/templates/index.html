@@ -1,0 +1,49 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+   <link type="text/css" rel="stylesheet" href="css/main.css" />
+   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+ </head>
+   <body>
+    <!--  Header -->
+     
+<div>
+       <ul id="nav">
+        <li><a href="/index">Home</a></li>
+	<li><a href="/configure">Configure</a></li>
+	<li><a href="https://developer.automatic.com/documentation/">Developer Docs</a></li>
+        <li><a href="http://twitter.com/sharath_sahadev">Contact us</a></li> 
+        <li><a href="https://twitter.com/share" class="twitter-share-button" data-count="none">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script></li>
+	</ul>
+</div>
+<br></br>
+   
+     <!--  {% include "nav.html" %} --> 
+      <form action="/submitTicker" method="post">
+            <div align="center">  
+            
+         
+
+<p class="ex1">
+<b>IOT Web App </b> 
+&nbsp;&nbsp;
+
+</p>
+
+</div>
+            <!--  Commented Out {% include "disclaimer.html" %} -->
+ <!--  Disclaimer -->
+ <div align="center">
+ <p class="ex2">Sample application to explore Internet of Things - Connected Car</p>
+ </div>
+
+   
+            
+            <div align="center">
+                <input type="submit" value="View Car Data"></input>
+
+            </div>
+           
+
+         </form>
+   </body>
+ </html>
