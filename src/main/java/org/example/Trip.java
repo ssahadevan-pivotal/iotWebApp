@@ -13,6 +13,8 @@ public class Trip {
     private String startLat;
     private String endLon;
     private String endLat;
+    private String path;
+    private String id;
     
         
 
@@ -20,6 +22,8 @@ public class Trip {
                 , String endAddressParm, String endedAtParm
                 , String startLonParm, String startLatParm
                 , String endLonParm, String endLatParm
+                , String pathParm
+                , String idParm
                ) 
     {
         startAddress = startAddressParm;
@@ -30,6 +34,8 @@ public class Trip {
         startLat =startLatParm;
         endLon =endLonParm;
         endLat =endLatParm;
+        path =pathParm;
+        id = idParm;
 
         System.out.println("Trip: startAddress is " + startAddress );
     }
@@ -65,6 +71,14 @@ public class Trip {
     public String getEndLat() {
         return endLat;
     }
-      
+
+    public String getPath() {
+        return path;
+    }
+
+    public String getId() {
+        return id;
+    }
+
       
 }

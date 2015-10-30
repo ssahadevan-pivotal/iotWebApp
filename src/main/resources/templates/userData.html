@@ -63,15 +63,11 @@
                         <th scope="col">From</th>
                         <th scope="col">To</th>
                         <th scope="col">End Date</th>     
-                        <th scope="col">startLon</th>     
-                        <th scope="col">startLat</th>     
-                        <th scope="col">EndLon</th>     
-                        <th scope="col">EndLat</th>     
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="trip, iterationStatus : ${tripList}">
-                        <td> <a th:href="@{/map(startLon=${trip.startLon},startLat=${trip.startLat},endLon=${trip.endLon},endLat=${trip.endLat})}">
+                        <td> <a th:href="@{/map(startLon=${trip.startLon},startLat=${trip.startLat},endLon=${trip.endLon},endLat=${trip.endLat},path=${trip.path})}">
                                   <p th:text="${iterationStatus.count}"   />
                              </a> 
                         </td>
@@ -79,10 +75,6 @@
                         <td>  <p th:text="${trip.startedAt}" /> </td>
                         <td>  <p th:text="${trip.endAddress}" /> </td>
                         <td>  <p th:text="${trip.endedAt}" /> </td>
-                        <td>  <p th:text="${trip.startLon}" /> </td>
-                        <td>  <p th:text="${trip.startLat}" /> </td>
-                        <td>  <p th:text="${trip.endLon}" /> </td>
-                        <td>  <p th:text="${trip.endLat}" /> </td>
  		    </tr>
                 </tbody>
         </table>            

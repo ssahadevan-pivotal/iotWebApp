@@ -75,11 +75,57 @@ private boolean DEBUG=true;
         return "index";
     }
 
+   /**
+    *  For drawing the showing a trip.           
+    *                                               
+    * Outputs in map.html 
+    * @author   Sharath Sahadevan  
+    * @version  1.0
+    * @Since    Oct 2015                   
+    */
     @RequestMapping("/map")
-    public String map(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
+    public String map(@RequestParam(value="name", required=false, defaultValue="World") String name
+                      , @RequestParam(value="startLon", required=false, defaultValue="World") String startLon
+                      , @RequestParam(value="startLat", required=false, defaultValue="World") String startLat
+                      , @RequestParam(value="endLon", required=false, defaultValue="World") String endLon
+                      , @RequestParam(value="endLat", required=false, defaultValue="World") String endLat
+                      , @RequestParam(value="path", required=false, defaultValue="World") String path
+                      , Model model) {
         model.addAttribute("name", name);
+        model.addAttribute("startLon", startLon);
+        model.addAttribute("startLat", startLat);
+        model.addAttribute("endLon", endLon);
+        model.addAttribute("endLat", endLat);
+        model.addAttribute("path", path);
+        System.out.println("startLon ="  + startLon + ", startLat=" + startLat ) ;
         return "map";
     }
+
+    /**
+    *  For testing           
+    *                                               
+    * Outputs in test.html 
+    * @author   Sharath Sahadevan  
+    * @version  1.0
+    * @Since    Oct 2015                   
+    */
+    @RequestMapping("/test")
+    public String test(@RequestParam(value="name", required=false, defaultValue="World") String name
+                      , @RequestParam(value="startLon", required=false, defaultValue="World") String startLon
+                      , @RequestParam(value="startLat", required=false, defaultValue="World") String startLat
+                      , @RequestParam(value="endLon", required=false, defaultValue="World") String endLon
+                      , @RequestParam(value="endLat", required=false, defaultValue="World") String endLat
+                      , @RequestParam(value="path", required=false, defaultValue="World") String path
+                      , Model model) {
+        model.addAttribute("name", name);
+        model.addAttribute("startLon", startLon);
+        model.addAttribute("startLat", startLat);
+        model.addAttribute("endLon", endLon);
+        model.addAttribute("endLat", endLat);
+        model.addAttribute("path", path);
+        System.out.println("startLon ="  + startLon + ", startLat=" + startLat ) ;
+        return "test";
+   }
     
     @RequestMapping("/configure")
     public String configure(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
@@ -87,6 +133,7 @@ private boolean DEBUG=true;
         return "underConstruction";
     }
     
+/* Commented Out
     @RequestMapping("/discover")
     public String discover(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
         model.addAttribute("name", name);
@@ -118,10 +165,16 @@ private boolean DEBUG=true;
         model.addAttribute("name", name);
         return "underConstruction";
     }
+*/
 
-    /* On Authorize, it comes to redirect            */
-    /*                                               */
-    /* Use OAuth token and get vehicle and User Data */
+    /**
+    * After the user  Authorizes with Automatic API's, Automatic redirects here            
+    *                                               
+    * Use OAuth token and get vehicle and User Data 
+    * @author   Sharath Sahadevan  
+    * @version  1.0
+    * @Since    Oct 2015                   
+    */
     @RequestMapping("/redirect")
     public String redirect(@RequestParam(value="code", required=false) String code
                                , @RequestParam(value="state", required=false) String state
@@ -236,16 +289,15 @@ private boolean DEBUG=true;
         return "error" ;
     }
     
-    /* Caused Issues - So Commenting it out
-    @RequestMapping("/error")
-    public String error( Model model) {
-        // model.addAttribute("name", name);
-        return "error";
-    }
+
+
+    /**
+    *  Get Vehicle Info and add to the Model 
+    *                                                               
+    * @author   Sharath Sahadevan  
+    * @version  1.0
+    * @Since    Oct 2015                   
     */
-
-
-    /* Get the Vehicle Information and add it to Model */
     public void getVehicleInfo( Model model, OAuthClient oAuthClient, String accessToken ) throws OAuthSystemException, OAuthProblemException {
            System.out.println("In getVehicleInfo ");
            OAuthClientRequest bearerClientRequest = new OAuthBearerClientRequest("https://api.automatic.com/vehicle/")
@@ -280,10 +332,18 @@ private boolean DEBUG=true;
 
     }
     
-    /* Get the Trip Information and add it to Model */
+    /**
+    *  Get Trip Info and add to the Model 
+    *                                                               
+    * @author   Sharath Sahadevan  
+    * @version  1.0
+    * @Since    Oct 2015                   
+    */
     public void getTripInfo( Model model, OAuthClient oAuthClient, String accessToken ) throws OAuthSystemException, OAuthProblemException {
            String startLon, startLat;
            String endLon, endLat;
+           String path;
+           String id;
 
            System.out.println("In getTripInfo ");
            OAuthClientRequest bearerClientRequest = new OAuthBearerClientRequest("https://api.automatic.com/trip/")
@@ -321,18 +381,28 @@ private boolean DEBUG=true;
              endLon=endLocationObj.getString("lon");
              endLat=endLocationObj.getString("lat");
 
+             path=resultsObj.getString("path");
+             id=resultsObj.getString("id");
+
              System.out.println("getTripInfo: startLocation= " + startLocationObj.getString("lon") ) ;
+             System.out.println("getTripInfo: path= " + path ) ;
              trip = new Trip( startAddressObj.getString("name") 
                                 , resultsObj.getString("started_at")
                                 , endAddressObj.getString("name") 
                                 , resultsObj.getString("ended_at")
                                 ,startLon, startLat, endLon, endLat
+                                ,path
+                                ,id
                             ) ;
 
 
              tripList.add( trip);
           
-             System.out.println("triplist size is " +  tripList.size() + ",trip.startAddess is " + trip.getStartAddress() );
+             if ( DEBUG )
+             {
+                System.out.println("triplist size is " +  tripList.size() + ",trip.startAddess is " + trip.getStartAddress() );
+                System.out.println("triplist path is " +   trip.getPath() );
+             }
 
            }
 
