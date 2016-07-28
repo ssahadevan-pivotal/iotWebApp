@@ -1,0 +1,103 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+   <link type="text/css" rel="stylesheet" href="css/main.css" />
+   <meta charset="utf-8" />
+   <title>A simple map</title>
+   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+   <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+   <link href='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.css' rel='stylesheet' />
+   <style>
+      body { margin:0; padding:0; }
+      #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+ </head>
+   <body>
+    <!--  Header -->
+     
+<div>
+       <ul id="nav">
+        <li><a href="/index">Home</a></li>
+	<li><a href="/configure">Configure</a></li>
+	<li><a href="/map">Map</a></li>
+	<li><a href="https://developer.automatic.com/documentation/">Developer Docs</a></li>
+        <li><a href="http://twitter.com/sharath_sahadev">Contact us</a></li> 
+        <li><a href="https://twitter.com/share" class="twitter-share-button" data-count="none">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script></li>
+	</ul>
+</div>
+<br></br>
+   
+<div id='map'></div>
+<script th:inline="javascript">
+
+ /*<![CDATA[*/
+function decode(encoded, precision) {
+    alert( "In decode") ;
+    precision = Math.pow(10, -precision);
+    var len = encoded.length, index=0, lat=0, lng = 0, array = [];
+    while (index < len) {
+        var b, shift = 0, result = 0;
+        do {
+            b = encoded.charCodeAt(index++) - 63;
+            result |= (b & 0x1f) << shift;
+            shift += 5;
+        } while (b >= 0x20);
+        var dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
+        lat += dlat;
+        shift = 0;
+        result = 0;
+        do {
+            b = encoded.charCodeAt(index++) - 63;
+            result |= (b & 0x1f) << shift;
+            shift += 5;
+        } while (b >= 0x20);
+        var dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
+        lng += dlng;
+        array.push( [lat * precision, lng * precision] );
+    }
+    return array;
+}
+/*]]>*/
+
+
+var startLon = /*[[${startLon}]]*/ -90.499 ;
+var startLat = /*[[${startLat}]]*/ 38.779 ;
+
+var endLon = /*[[${endLon}]]*/ -90.499 ;
+var endLat = /*[[${endLat}]]*/ 38.779 ;
+var path=    /*[[${path}]]*/ null ;
+
+alert(path);
+
+var array = decode( path, 5);
+
+alert(array);
+
+L.mapbox.accessToken = 'pk.eyJ1Ijoic3NhaGFkZXZhbiIsImEiOiJhMGQ0M2U4N2I2MDhhZTBiN2VmMTY1YjdmZmZhMjI1NyJ9.tivQD3kJihF3779473Z27A';
+
+var map = L.mapbox.map('map', 'mapbox.streets')
+    .setView([startLat, startLon], 12);
+
+// L.marker is a low-level marker constructor in Leaflet.
+L.marker([startLat, startLon], {
+    icon: L.mapbox.marker.icon({
+        'marker-size': 'small',
+        'marker-symbol': 'car',
+        'marker-color': '#fa0'
+    })
+}).addTo(map);
+
+// End Marker - L.marker is a low-level marker constructor in Leaflet.
+L.marker([endLat, endLon], {
+    icon: L.mapbox.marker.icon({
+        'marker-size': 'small',
+        'marker-symbol': 'car',
+        'marker-color': '#f86767'
+    })
+}).addTo(map);
+
+</script>
+   </body>
+ </html>
+
+
+

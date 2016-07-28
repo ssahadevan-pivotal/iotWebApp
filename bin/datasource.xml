@@ -7,7 +7,7 @@
        http://www.springframework.org/schema/cloud http://www.springframework.org/schema/cloud/spring-cloud.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<beans profile="auto">
-		<cloud:data-source id="testDataSource" service-name="StockAnalyzerDb">
+		<cloud:data-source id="testDataSource" service-name="iotDb">
 			<cloud:pool pool-size="20" max-wait-time="200"/>
 		</cloud:data-source>
 	</beans>

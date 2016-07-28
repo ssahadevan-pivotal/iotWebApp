@@ -8,3 +8,17 @@
 build/libs/iotWebApp.jar.original
 
 build/resources/main/templates/index_old.html
+
+*.lock
+
+*.lock
+
+.project
+
+*.class
+
+*.class
+
+*.tar
+
+*.zip
